@@ -1,5 +1,5 @@
 // import other modules and set constants/variables
-import {gameBoard, drawSnake as drawSnake, snakeBody, snakeSpeed, updateSnake as updateSnake} from './snake.js'
+import {gameBoard, appendYouSnakeSegment as appendYouSnakeSegment, drawSnake as drawSnake, snakeBody, snakeSpeed, updateSnake as updateSnake} from './snake.js'
 import {checkIfSnakeAte, drawFood as drawFood, food, updateFood as updateFood} from "./food.js";
 let lastRenderTime = 0
 let globalID;
@@ -46,8 +46,8 @@ export function pauseGame(){
 }
 
 function update(){
-    checkIfSnakeAte()
     updateSnake()
+    if (checkIfSnakeAte()){appendYouSnakeSegment()}
     updateFood()
 }
 function draw(){

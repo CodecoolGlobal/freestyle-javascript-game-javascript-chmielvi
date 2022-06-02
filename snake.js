@@ -2,16 +2,24 @@ export const snakeSpeed = 3// how many times per second does the snake move
 export const snakeBody = []
 export const gameBoard = document.getElementById('game-board')
 export const movementDirection = {'direction':{'x':'add'}}
+export let addSnakeElement;
 
-export function updateSnake(){
+export function updateSnake(snakeAte) {
     const coordinate = Object.keys(movementDirection['direction'])[0]
     const direction = Object.values(movementDirection['direction'])[0]
-    if (direction === 'add'){
+    if (direction === 'add') {
         snakeBody[0][coordinate] += 1
-    }else{
+    } else {
         snakeBody[0][coordinate] -= 1
     }
 }
+
+function getHeadsNextCoordinates(){
+
+}
+
+
+export function appendYouSnakeSegment(){}
 
 export function drawSnake(){
     snakeBody.forEach(segment =>{

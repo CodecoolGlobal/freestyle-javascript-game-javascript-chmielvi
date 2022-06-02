@@ -1,4 +1,4 @@
-import {snakeBody, gameBoard, movementDirection} from './snake.js'
+import {snakeBody, gameBoard} from './snake.js'
 export let food = { 'x' : 13, 'y' : 13}
 const lowestCoordinateValue = 3
 const highestCoordinateValue = 18
@@ -6,7 +6,6 @@ const highestCoordinateValue = 18
 
 export function updateFood(){
     if (checkIfSnakeAte()){
-        console.log('snake ate')
         let invalidCoordinate = true
         while (invalidCoordinate){
             let x = generateRandomNumber();
