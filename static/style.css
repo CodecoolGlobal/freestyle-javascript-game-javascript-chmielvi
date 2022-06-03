@@ -47,7 +47,9 @@ body {
      text-align: center;
  }
 
- /*.error-Message{*/
- /*    color: darkred;*/
- /*    text-align: center;*/
- /*}*/
+.game-run {
+    background-color: chocolate;
+}
+.speed {
+    background-color: lightpink;
+}

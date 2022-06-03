@@ -1,21 +1,19 @@
 import {snakeBody, gameBoard} from './snake.js'
-export let food = { 'x' : 13, 'y' : 13}
+export let food;
 const lowestCoordinateValue = 3
 const highestCoordinateValue = 18
 
 
 export function updateFood(){
-    if (checkIfSnakeAte()){
-        let invalidCoordinate = true
-        while (invalidCoordinate){
-            let x = generateRandomNumber();
-            let y = generateRandomNumber();
-            let coordinate = {'x' : x, 'y' : y}
-            if (checkFoodCoordinates(coordinate)){
-                food = coordinate
-                invalidCoordinate = false
-                break
-            }
+    let invalidCoordinate = true
+    while (invalidCoordinate){
+        let x = generateRandomNumber();
+        let y = generateRandomNumber();
+        let coordinate = {'x' : x, 'y' : y}
+        if (checkFoodCoordinates(coordinate)){
+            food = coordinate
+            invalidCoordinate = false
+            break
         }
     }
 }
@@ -48,4 +46,8 @@ function generateRandomNumber() {
     rand = Math.floor( rand * difference);
     rand = rand + min;
     return rand;
+}
+
+export function setFoodStarterPosition(starterPosition){
+    food = starterPosition
 }

@@ -1,16 +1,31 @@
-// import other modules and set constants/variables
-import {gameBoard, appendYouSnakeSegment as appendYouSnakeSegment, drawSnake as drawSnake, snakeBody, snakeSpeed, updateSnake as updateSnake} from './snake.js'
-import {checkIfSnakeAte, drawFood as drawFood, food, updateFood as updateFood} from "./food.js";
+import {
+    gameBoard,
+    snakeBody,
+    snakeSpeed,
+    appendNewSnakeSegment,
+    drawSnake,
+    updateSnake,
+    manipulateSpeeed
+} from './snake.js';
+
+import {
+    checkIfSnakeAte,
+    drawFood,
+    updateFood,
+    setFoodStarterPosition
+    } from "./food.js";
+
 let lastRenderTime = 0
 let globalID;
-const starterSnakePosition = { 'x' : 11, 'y' : 11}
+const snakeStarterPosition = { 'x' : 11, 'y' : 11}
+const foodStarterPosition = { 'x' : 13, 'y' : 13}
 const xAxisEdgeCases = [-1,21]
 const yAxisEdgeCases = [-1,22]
 
 
 window.addEventListener("load", function(){
-    snakeBody.push(starterSnakePosition)
-    // food = starterFoodPosition
+    snakeBody.push(snakeStarterPosition)
+    setFoodStarterPosition(foodStarterPosition)
 })
 
 
@@ -24,18 +39,22 @@ controlPanel.addEventListener('click', (event) =>{
         window.requestAnimationFrame(initGame)
         clickedButton.innerHTML = 'Continue'
         }
-    }else{
+    }else if (clickedButton.id === "pause"){
         pauseGame()
+    }else if (clickedButton.id === "speed-up"){
+        manipulateSpeeed('add')
+    }else{
+        manipulateSpeeed('subtract')
     }
 })
 
 function initGame(currentTime) {
+    // if (globalID === 600){gameOver()}
     globalID = window.requestAnimationFrame(initGame)
     const secondsSinceLastRender = (currentTime - lastRenderTime)/1000 // divide milliseconds to seconds
     if (secondsSinceLastRender < 1 / snakeSpeed){return}
     lastRenderTime = currentTime
-    console.log('snake',{...snakeBody[0]})
-    console.log('food',{...food})
+    console.log(snakeSpeed)
     if (checkGameOver()){return}
     update()
     draw()
@@ -47,8 +66,10 @@ export function pauseGame(){
 
 function update(){
     updateSnake()
-    if (checkIfSnakeAte()){appendYouSnakeSegment()}
-    updateFood()
+    if (checkIfSnakeAte()){
+        updateFood()
+        appendNewSnakeSegment()
+    }
 }
 function draw(){
     gameBoard.innerText=''
@@ -58,13 +79,16 @@ function draw(){
 
 function checkGameOver(){
     if (xAxisEdgeCases.includes(snakeBody[0].x) || yAxisEdgeCases.includes(snakeBody[0].y)){
-        pauseGame()
-        let gameOverElement = document.createElement("div")
-        gameOverElement.classList.add('error-message-container')
-        gameOverElement.innerHTML = '<h1>GAME OVER !!</h1>'
-        gameBoard.appendChild(gameOverElement)
-        document.getElementById("start-continue").innerText = 'Restart'
+        gameOver()
         return true
     }
+}
 
+function gameOver(){
+    pauseGame()
+    let gameOverElement = document.createElement("div")
+    gameOverElement.classList.add('error-message-container')
+    gameOverElement.innerHTML = '<h1>GAME OVER !!</h1>'
+    gameBoard.appendChild(gameOverElement)
+    document.getElementById("start-continue").innerText = 'Restart'
 }

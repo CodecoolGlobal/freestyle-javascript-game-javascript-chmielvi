@@ -1,25 +1,30 @@
-export const snakeSpeed = 3// how many times per second does the snake move
-export const snakeBody = []
+export let snakeSpeed = 2// how many times per second does the snake move
+export let snakeBody = []
+export let movementDirection = {'direction':{'x':'add'}}
 export const gameBoard = document.getElementById('game-board')
-export const movementDirection = {'direction':{'x':'add'}}
-export let addSnakeElement;
 
-export function updateSnake(snakeAte) {
-    const coordinate = Object.keys(movementDirection['direction'])[0]
-    const direction = Object.values(movementDirection['direction'])[0]
-    if (direction === 'add') {
-        snakeBody[0][coordinate] += 1
-    } else {
-        snakeBody[0][coordinate] -= 1
+export function updateSnake() {
+    for (let step = snakeBody.length - 2; step >= 0; step--){
+        snakeBody[step + 1] = { ...snakeBody[step]}
     }
+    snakeBody[0] = getHeadsNextCoordinates()
 }
 
 function getHeadsNextCoordinates(){
-
+    let snakeHead = {...snakeBody[0]}
+    const coordinate = Object.keys(movementDirection['direction'])[0]
+    const direction = Object.values(movementDirection['direction'])[0]
+    if (direction === 'add') {
+        snakeHead[coordinate] += 1
+    } else {
+        snakeHead[coordinate] -= 1
+    }
+    return snakeHead
 }
 
-
-export function appendYouSnakeSegment(){}
+export function appendNewSnakeSegment(){
+    snakeBody.unshift(getHeadsNextCoordinates())
+}
 
 export function drawSnake(){
     snakeBody.forEach(segment =>{
@@ -41,5 +46,13 @@ document.onkeydown = (event) => {
         movementDirection['direction'] = {'x':'add'}
 }else if (pressedKey === 'ArrowLeft'){
         movementDirection['direction'] = {'x':'subtract'}
+    }
+}
+
+export function manipulateSpeeed(operator){
+    if (operator === 'add'){
+        snakeSpeed += 1
+    }else{
+        snakeSpeed -= 1
     }
 }
