@@ -1,5 +1,7 @@
 # Freestyle JavaScript Game
 
+<img width="929" alt="Bildschirmfoto 2024-12-12 um 11 35 43" src="https://github.com/user-attachments/assets/4ea13244-1206-4b2c-86bc-2cf16ea0e3c7" />
+
 ## Story
 
 By now you know the basics of Javascript. Put your knowledge to the test,
